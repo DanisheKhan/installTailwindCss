@@ -3,6 +3,7 @@
   "displayName": "Tailwind CSS Vite Setup",
   "description": "Automatically setup Tailwind CSS with Vite React",
   "version": "0.0.5",
+  "icon": "images/logo.png",
   "publisher": "tailwind-vite",
   "repository": {
     "type": "git",
@@ -22,7 +23,7 @@
     "commands": [
       {
         "command": "tailwind-vite-setup.setupTailwind",
-        "title": "Setup Tailwind CSS with Vite"
+        "title": "Setup Tailwind CSS"
       }
     ]
   },
