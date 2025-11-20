@@ -3,7 +3,6 @@
 import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
-import * as cp from 'child_process';
 
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
@@ -20,87 +19,58 @@ export function activate(context: vscode.ExtensionContext) {
 				return;
 			}
 
-			// Show progress notification
-			vscode.window.withProgress(
-				{
-					location: vscode.ProgressLocation.Notification,
-					title: 'Setting up Tailwind CSS with Vite...',
-					cancellable: false,
-				},
-				async (progress) => {
-					try {
-						// Step 1: Install npm packages
-						progress.report({ increment: 0, message: 'Installing tailwindcss and @tailwindcss/vite...' });
-						await runNpmInstall(workspaceFolder.uri.fsPath);
-						progress.report({ increment: 33 });
+			const workspacePath = workspaceFolder.uri.fsPath;
 
-						// Step 2: Update vite.config.js
-						progress.report({ message: 'Updating vite.config.js...' });
-						await updateViteConfig(workspaceFolder.uri.fsPath);
-						progress.report({ increment: 33 });
-
-						// Step 3: Update index.css
-						progress.report({ message: 'Updating index.css...' });
-						await updateIndexCss(workspaceFolder.uri.fsPath);
-						progress.report({ increment: 33 });
-
-						vscode.window.showInformationMessage('✓ Tailwind CSS setup completed successfully!');
-					} catch (error) {
-						const errorMsg = error instanceof Error ? error.message : String(error);
-						vscode.window.showErrorMessage(`Setup failed: ${errorMsg}`);
-						console.error('Setup error:', error);
-					}
-				}
-			);
+			// Step 1: Create and show terminal with npm install command
+			const terminal = vscode.window.createTerminal('Tailwind CSS Setup');
+			terminal.show();
+			
+			// Execute npm install command
+			const isWindows = process.platform === 'win32';
+			const npmCmd = isWindows ? 'npm install tailwindcss @tailwindcss/vite' : 'npm install tailwindcss @tailwindcss/vite';
+			
+			terminal.sendText(npmCmd);
+			
+			// Wait a moment for user to see the command executing
+			await new Promise(resolve => setTimeout(resolve, 2000));
+			
+			// Show progress message
+			vscode.window.showInformationMessage('Installing Tailwind CSS... Please wait for npm to complete.');
+			
+			// Wait for npm to likely finish (adjust timeout as needed)
+			await new Promise(resolve => setTimeout(resolve, 15000));
+			
+			// Step 2: Update vite.config
+			try {
+				updateViteConfig(workspacePath);
+				vscode.window.showInformationMessage('✓ Updated vite.config.ts/js');
+			} catch (error) {
+				const errorMsg = error instanceof Error ? error.message : String(error);
+				vscode.window.showWarningMessage(`Could not update vite.config: ${errorMsg}`);
+			}
+			
+			// Step 3: Update index.css
+			try {
+				updateIndexCss(workspacePath);
+				vscode.window.showInformationMessage('✓ Updated index.css');
+			} catch (error) {
+				const errorMsg = error instanceof Error ? error.message : String(error);
+				vscode.window.showWarningMessage(`Could not update index.css: ${errorMsg}`);
+			}
+			
+			vscode.window.showInformationMessage('✓ Tailwind CSS setup completed! Check the terminal to confirm npm installation finished.');
+			
 		} catch (error) {
 			const errorMsg = error instanceof Error ? error.message : String(error);
-			vscode.window.showErrorMessage(`Extension error: ${errorMsg}`);
+			vscode.window.showErrorMessage(`Error: ${errorMsg}`);
+			console.error('Extension error:', error);
 		}
 	});
 
 	context.subscriptions.push(disposable);
 }
 
-async function runNpmInstall(workspacePath: string): Promise<void> {
-	return new Promise((resolve, reject) => {
-		const isWindows = process.platform === 'win32';
-		const command = isWindows ? 'npm.cmd' : 'npm';
-		
-		const proc = cp.spawn(command, ['install', 'tailwindcss', '@tailwindcss/vite'], {
-			cwd: workspacePath,
-			stdio: 'pipe',
-			shell: true
-		});
-
-		let stderr = '';
-		let stdout = '';
-
-		proc.stdout?.on('data', (data) => {
-			stdout += data.toString();
-			console.log('npm install output:', data.toString());
-		});
-
-		proc.stderr?.on('data', (data) => {
-			stderr += data.toString();
-			console.error('npm install error:', data.toString());
-		});
-
-		proc.on('close', (code) => {
-			if (code === 0) {
-				console.log('npm install completed successfully');
-				resolve();
-			} else {
-				reject(new Error(`npm install failed with code ${code}: ${stderr}`));
-			}
-		});
-
-		proc.on('error', (err) => {
-			reject(new Error(`Failed to run npm install: ${err.message}`));
-		});
-	});
-}
-
-async function updateViteConfig(workspacePath: string): Promise<void> {
+function updateViteConfig(workspacePath: string): void {
 	const viteConfigPath = path.join(workspacePath, 'vite.config.ts');
 	const viteConfigPathJs = path.join(workspacePath, 'vite.config.js');
 
@@ -126,7 +96,7 @@ export default defineConfig({
 	fs.writeFileSync(configPath, newConfig, 'utf-8');
 }
 
-async function updateIndexCss(workspacePath: string): Promise<void> {
+function updateIndexCss(workspacePath: string): void {
 	const indexCssPath = path.join(workspacePath, 'index.css');
 	const srcIndexCssPath = path.join(workspacePath, 'src', 'index.css');
 
