@@ -4,7 +4,7 @@
   "description": "Automatically setup Tailwind CSS with Vite React",
   "version": "0.0.5",
   "icon": "images/logo.png",
-  "publisher": "tailwind-vite",
+  "publisher": "DanishKhan",
   "repository": {
     "type": "git",
     "url": "https://github.com/DanisheKhan/installTailwindCss.git"
