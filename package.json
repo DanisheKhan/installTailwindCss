@@ -6,7 +6,7 @@
   "publisher": "tailwind-vite",
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/tailwind-vite-setup.git"
+    "url": "https://github.com/DanisheKhan/installTailwindCss.git"
   },
   "engines": {
     "vscode": "^1.106.1"
