@@ -57,6 +57,24 @@ export function activate(context: vscode.ExtensionContext) {
 				const errorMsg = error instanceof Error ? error.message : String(error);
 				vscode.window.showWarningMessage(`Could not update index.css: ${errorMsg}`);
 			}
+
+			// Step 4: Update App.css
+			try {
+				updateAppCss(workspacePath);
+				vscode.window.showInformationMessage('✓ Cleared App.css');
+			} catch (error) {
+				const errorMsg = error instanceof Error ? error.message : String(error);
+				vscode.window.showWarningMessage(`Could not clear App.css: ${errorMsg}`);
+			}
+
+			// Step 5: Update App.jsx
+			try {
+				updateAppJsx(workspacePath);
+				vscode.window.showInformationMessage('✓ Updated App.jsx');
+			} catch (error) {
+				const errorMsg = error instanceof Error ? error.message : String(error);
+				vscode.window.showWarningMessage(`Could not update App.jsx: ${errorMsg}`);
+			}
 			
 			vscode.window.showInformationMessage('✓ Tailwind CSS setup completed! Check the terminal to confirm npm installation finished.');
 			
@@ -109,18 +127,42 @@ function updateIndexCss(workspacePath: string): void {
 		throw new Error('index.css not found in project root or src folder');
 	}
 
-	let cssContent = fs.readFileSync(cssPath, 'utf-8');
+	// Replace entire file with just the tailwindcss import
+	const cssContent = `@import "tailwindcss";`;
+	fs.writeFileSync(cssPath, cssContent, 'utf-8');
+}
 
-	// Check if tailwindcss import already exists
-	if (cssContent.includes('@import "tailwindcss"')) {
-		console.log('Tailwindcss import already exists in index.css');
-		return;
+function updateAppCss(workspacePath: string): void {
+	const appCssPath = path.join(workspacePath, 'src', 'App.css');
+
+	if (!fs.existsSync(appCssPath)) {
+		throw new Error('App.css not found in src folder');
 	}
 
-	// Add @import "tailwindcss"; at the beginning of the file
-	cssContent = `@import "tailwindcss";\n\n${cssContent}`;
+	// Clear App.css - write empty content
+	fs.writeFileSync(appCssPath, '', 'utf-8');
+}
 
-	fs.writeFileSync(cssPath, cssContent, 'utf-8');
+function updateAppJsx(workspacePath: string): void {
+	const appJsxPath = path.join(workspacePath, 'src', 'App.jsx');
+
+	if (!fs.existsSync(appJsxPath)) {
+		throw new Error('App.jsx not found in src folder');
+	}
+
+	const appJsxContent = `import './App.css'
+
+function App() {
+  return (
+    <>
+      <h1>Danish Khan</h1>
+    </>
+  )
+}
+
+export default App;`;
+
+	fs.writeFileSync(appJsxPath, appJsxContent, 'utf-8');
 }
 
 // This method is called when your extension is deactivated
