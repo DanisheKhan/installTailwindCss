@@ -4,6 +4,8 @@ All notable changes to the "tailwind-vite-setup" extension will be documented in
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
-## [Unreleased]
+## [0.0.5]
 
-- Initial release
+- Automated Tailwind CSS setup for Vite React projects
+- Command palette integration
+- Progress notifications

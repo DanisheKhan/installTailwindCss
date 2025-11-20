@@ -22,7 +22,7 @@ This VS Code extension automates the entire Tailwind CSS setup process for Vite 
 
 1. Open your Vite React project in VS Code
 2. Open the Command Palette (`Ctrl+Shift+P` / `Cmd+Shift+P`)
-3. Search for and run **"Setup Tailwind CSS with Vite"**
+3. Search for and run **"Setup Tailwind CSS"**
 4. Wait for the setup to complete (you'll see a progress notification)
 5. Once complete, Tailwind CSS will be fully configured in your project!
 
@@ -53,9 +53,8 @@ The extension performs the following automated steps:
 
 ## Release Notes
 
-### 1.0.0
+### 0.0.5
 
-- Initial release
 - Automated Tailwind CSS setup for Vite React projects
 - Command palette integration
 - Progress notifications
@@ -65,14 +64,6 @@ The extension performs the following automated steps:
 Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
 
 * [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
 
 ## For more information
 
