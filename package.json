@@ -2,7 +2,7 @@
   "name": "tailwind-vite-setup",
   "displayName": "Tailwind CSS Vite Setup",
   "description": "Automatically setup Tailwind CSS with Vite React",
-  "version": "0.0.5",
+  "version": "0.1.0",
   "icon": "images/logo.png",
   "publisher": "DanishKhan",
   "repository": {
