@@ -1,8 +1,10 @@
 # Tailwind CSS Vite Setup
 
-Automatically setup Tailwind CSS with Vite React in a single command!
+**Automatically setup Tailwind CSS with Vite React in a single command!**
 
-## Features
+Tired of manually configuring Tailwind CSS in your Vite React projects? This VS Code extension eliminates all the tedious setup steps and gets you coding with Tailwind CSS in seconds.
+
+## ✨ Key Features
 
 This VS Code extension automates the entire Tailwind CSS setup process for Vite React projects:
 
@@ -13,13 +15,20 @@ This VS Code extension automates the entire Tailwind CSS setup process for Vite 
 - **Automated NPM Install**: Installs `tailwindcss` and `@tailwindcss/vite` packages last
 - **Progress Notifications**: Real-time feedback during the setup process
 
+## 🚀 Quick Start
+
+1. Open your Vite React project in VS Code
+2. Press `Ctrl+Shift+P` (or `Cmd+Shift+P` on Mac)
+3. Type **"Setup Tailwind CSS"** and hit Enter
+4. Wait for the process to complete - that's it!
+
 ## Requirements
 
 - VS Code 1.106.1 or higher
 - Node.js and npm installed
 - An existing Vite React project
 
-## Usage
+## 📖 Detailed Usage
 
 1. Open your Vite React project in VS Code
 2. Open the Command Palette (`Ctrl+Shift+P` / `Cmd+Shift+P`)
@@ -71,7 +80,35 @@ The extension performs the following automated steps **in order**:
    npm install tailwindcss @tailwindcss/vite
    ```
 
+## Troubleshooting
+
+### Issue: "No workspace folder found"
+
+- Ensure you have a folder or workspace open in VS Code
+- Try opening your project folder with `File > Open Folder`
+
+### Issue: File not found errors
+
+- Make sure your project has the standard Vite React structure:
+  - `vite.config.ts` or `vite.config.js`
+  - `src/App.jsx` and `src/App.css`
+  - `index.css` (in root or src folder)
+
+### Issue: npm install doesn't complete
+
+- Check your internet connection
+- Ensure Node.js and npm are properly installed
+- Try running `npm install` manually in the terminal
+
 ## Release Notes
+
+### 0.2.0
+
+- Enhanced error handling and user feedback
+- Improved documentation and code comments
+- Better validation of project structure
+- Refined terminal output messaging
+- Code cleanup and optimization
 
 ### 0.1.0
 
@@ -85,13 +122,13 @@ The extension performs the following automated steps **in order**:
 - Command palette integration
 - Progress notifications
 
-## Following extension guidelines
+## Extension Guidelines
 
 Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
 
 * [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
 
-## For more information
+## For More Information
 
 * [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
 * [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)

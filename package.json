@@ -1,10 +1,15 @@
 {
   "name": "tailwind-vite-setup",
   "displayName": "Tailwind CSS Vite Setup",
-  "description": "Automatically setup Tailwind CSS with Vite React",
-  "version": "0.1.0",
+  "description": "One-click Tailwind CSS setup for Vite React projects. Auto-configure vite.config, install packages, and initialize your project instantly.",
+  "version": "0.2.0",
   "icon": "images/logo.png",
   "publisher": "DanishKhan",
+  "license": "MIT",
+  "homepage": "https://github.com/DanisheKhan/installTailwindCss",
+  "bugs": {
+    "url": "https://github.com/DanisheKhan/installTailwindCss/issues"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/DanisheKhan/installTailwindCss.git"
@@ -13,7 +18,25 @@
     "vscode": "^1.106.1"
   },
   "categories": [
+    "Snippets",
     "Other"
+  ],
+  "keywords": [
+    "tailwind",
+    "tailwindcss",
+    "vite-plugin-tailwind",
+    "vite",
+    "react",
+    "setup",
+    "configuration",
+    "css",
+    "scaffolding",
+    "automation",
+    "tailwindsetup",
+    "vite-react",
+    "vitejs",
+    "vite-plugin",
+    "utility-first"
   ],
   "activationEvents": [
     "onCommand:tailwind-vite-setup.setupTailwind"
