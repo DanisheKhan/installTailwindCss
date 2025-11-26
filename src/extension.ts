@@ -21,26 +21,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 			const workspacePath = workspaceFolder.uri.fsPath;
 
-			// Step 1: Create and show terminal with npm install command
-			const terminal = vscode.window.createTerminal('Tailwind CSS Setup');
-			terminal.show();
-			
-			// Execute npm install command
-			const isWindows = process.platform === 'win32';
-			const npmCmd = isWindows ? 'npm install tailwindcss @tailwindcss/vite' : 'npm install tailwindcss @tailwindcss/vite';
-			
-			terminal.sendText(npmCmd);
-			
-			// Wait a moment for user to see the command executing
-			await new Promise(resolve => setTimeout(resolve, 2000));
-			
-			// Show progress message
-			vscode.window.showInformationMessage('Installing Tailwind CSS... Please wait for npm to complete.');
-			
-			// Wait for npm to likely finish (adjust timeout as needed)
-			await new Promise(resolve => setTimeout(resolve, 15000));
-			
-			// Step 2: Update vite.config
+			// Step 1: Update vite.config
 			try {
 				updateViteConfig(workspacePath);
 				vscode.window.showInformationMessage('✓ Updated vite.config.ts/js');
@@ -49,7 +30,7 @@ export function activate(context: vscode.ExtensionContext) {
 				vscode.window.showWarningMessage(`Could not update vite.config: ${errorMsg}`);
 			}
 			
-			// Step 3: Update index.css
+			// Step 2: Update index.css
 			try {
 				updateIndexCss(workspacePath);
 				vscode.window.showInformationMessage('✓ Updated index.css');
@@ -58,7 +39,7 @@ export function activate(context: vscode.ExtensionContext) {
 				vscode.window.showWarningMessage(`Could not update index.css: ${errorMsg}`);
 			}
 
-			// Step 4: Update App.css
+			// Step 3: Update App.css
 			try {
 				updateAppCss(workspacePath);
 				vscode.window.showInformationMessage('✓ Cleared App.css');
@@ -67,7 +48,7 @@ export function activate(context: vscode.ExtensionContext) {
 				vscode.window.showWarningMessage(`Could not clear App.css: ${errorMsg}`);
 			}
 
-			// Step 5: Update App.jsx
+			// Step 4: Update App.jsx
 			try {
 				updateAppJsx(workspacePath);
 				vscode.window.showInformationMessage('✓ Updated App.jsx');
@@ -75,8 +56,15 @@ export function activate(context: vscode.ExtensionContext) {
 				const errorMsg = error instanceof Error ? error.message : String(error);
 				vscode.window.showWarningMessage(`Could not update App.jsx: ${errorMsg}`);
 			}
+
+			// Step 5: Create terminal and run npm install (LAST STEP)
+			const terminal = vscode.window.createTerminal('Tailwind CSS Setup');
+			terminal.show();
 			
-			vscode.window.showInformationMessage('✓ Tailwind CSS setup completed! Check the terminal to confirm npm installation finished.');
+			const npmCmd = 'npm install tailwindcss @tailwindcss/vite';
+			terminal.sendText(npmCmd);
+			
+			vscode.window.showInformationMessage('Installing Tailwind CSS packages... Please wait for npm to complete.');
 			
 		} catch (error) {
 			const errorMsg = error instanceof Error ? error.message : String(error);
