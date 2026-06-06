@@ -2,7 +2,7 @@
   "name": "tailwind-vite-setup",
   "displayName": "Tailwind CSS Vite Setup",
   "description": "One-click Tailwind CSS setup for Vite React projects. Auto-configure vite.config, install packages, and initialize your project instantly.",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "icon": "images/logo.png",
   "publisher": "DanishKhan",
   "license": "MIT",
