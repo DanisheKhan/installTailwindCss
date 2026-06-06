@@ -1,136 +1,177 @@
 # Tailwind CSS Vite Setup
 
-**Automatically setup Tailwind CSS with Vite React in a single command!**
+> **One command. Zero configuration. Tailwind CSS ready in seconds.**
 
-Tired of manually configuring Tailwind CSS in your Vite React projects? This VS Code extension eliminates all the tedious setup steps and gets you coding with Tailwind CSS in seconds.
+[![VS Code Marketplace](https://img.shields.io/badge/VS%20Code-Marketplace-blue?logo=visual-studio-code)](https://marketplace.visualstudio.com)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-## ✨ Key Features
+Eliminate the repetitive boilerplate of setting up Tailwind CSS in every new Vite React project. This extension automates the entire configuration process — from updating your Vite config to installing packages — all from the VS Code Command Palette.
 
-This VS Code extension automates the entire Tailwind CSS setup process for Vite React projects:
+---
 
-- **One-Click Setup**: Execute a single command to complete the entire setup process
-- **Auto Config Update**: Updates `vite.config.ts/js` with Tailwind CSS plugin configuration
-- **CSS Injection**: Automatically adds `@import "tailwindcss"` to your `index.css`
-- **App Updates**: Clears `App.css` and updates `App.jsx` with starter code
-- **Automated NPM Install**: Installs `tailwindcss` and `@tailwindcss/vite` packages last
-- **Progress Notifications**: Real-time feedback during the setup process
+## ✨ Features
+
+| Feature | Description |
+|---|---|
+| **One-Click Setup** | Run a single command to complete the full Tailwind CSS configuration |
+| **Vite Config Update** | Automatically injects the `@tailwindcss/vite` plugin into `vite.config.ts/js` |
+| **CSS Injection** | Replaces `index.css` content with the required `@import "tailwindcss"` directive |
+| **App Scaffold** | Clears `App.css` and updates `App.jsx` with clean starter code |
+| **Background Install** | Runs `npm install` silently in the background — no terminal window interruption |
+| **Live Progress** | Displays a real-time progress notification that auto-dismisses on completion |
+
+---
 
 ## 🚀 Quick Start
 
-1. Open your Vite React project in VS Code
-2. Press `Ctrl+Shift+P` (or `Cmd+Shift+P` on Mac)
-3. Type **"Setup Tailwind CSS"** and hit Enter
-4. Wait for the process to complete - that's it!
+1. Open your existing **Vite React** project in VS Code
+2. Open the Command Palette: `Ctrl+Shift+P` (Windows/Linux) or `Cmd+Shift+P` (macOS)
+3. Search for and run: **`Setup Tailwind CSS`**
+4. Watch the progress notification — it will automatically dismiss when done
 
-## Requirements
+---
 
-- VS Code 1.106.1 or higher
-- Node.js and npm installed
-- An existing Vite React project
+## 📋 Requirements
 
-## 📖 Detailed Usage
+- **VS Code** `1.106.1` or higher
+- **Node.js** and **npm** installed and available on your system `PATH`
+- An existing **Vite React** project with the standard file structure
 
-1. Open your Vite React project in VS Code
-2. Open the Command Palette (`Ctrl+Shift+P` / `Cmd+Shift+P`)
-3. Search for and run **"Setup Tailwind CSS"**
-4. Wait for the setup to complete (you'll see progress notifications)
-5. A terminal will open to run `npm install` - wait for it to finish
-6. Once complete, Tailwind CSS will be fully configured in your project!
+---
 
-## What It Does
+## 🔧 What It Does
 
-The extension performs the following automated steps **in order**:
+The extension performs the following steps **in sequence**:
 
-1. **Updates vite.config.ts/js**
-   ```typescript
-   import { defineConfig } from 'vite'
-   import react from '@vitejs/plugin-react'
-   import tailwindcss from '@tailwindcss/vite'
+### 1. Update `vite.config.ts` / `vite.config.js`
 
-   export default defineConfig({
-     plugins: [react(), tailwindcss()],
-   })
-   ```
+```typescript
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+import tailwindcss from '@tailwindcss/vite'
 
-2. **Updates index.css**
-   ```css
-   @import "tailwindcss";
-   ```
+export default defineConfig({
+  plugins: [react(), tailwindcss()],
+})
+```
 
-3. **Clears App.css**
-   - Removes all default styles
+### 2. Update `index.css`
 
-4. **Updates App.jsx**
-   ```jsx
-   import './App.css'
+```css
+@import "tailwindcss";
+```
 
-   function App() {
-     return (
-       <>
-         <h1>Danish Khan</h1>
-       </>
-     )
-   }
+### 3. Clear `src/App.css`
 
-   export default App;
-   ```
+Removes all default Vite styles, leaving a clean slate.
 
-5. **Installs Dependencies** (LAST STEP)
+### 4. Update `src/App.jsx`
+
+```jsx
+import './App.css'
+
+function App() {
+  return (
+    <>
+      <h1>Danish Khan</h1>
+      <p>I am a freelancer. Connect with me if you want to develop a project!</p>
+      <p>Email: danishkhan.jsx@gmail.com</p>
+    </>
+  )
+}
+
+export default App;
+```
+
+### 5. Install Dependencies
+
+```bash
+npm install tailwindcss @tailwindcss/vite
+```
+
+Runs silently in the background. A single progress notification tracks all steps and dismisses automatically upon completion.
+
+---
+
+## 🛠️ Troubleshooting
+
+### "No workspace folder found"
+
+You must have a folder or workspace open in VS Code before running this command.
+
+**Fix:** Go to `File → Open Folder` and open your Vite React project.
+
+---
+
+### File not found errors
+
+The extension expects a standard Vite React project structure.
+
+**Required files:**
+- `vite.config.ts` or `vite.config.js` (project root)
+- `src/App.jsx` and `src/App.css`
+- `index.css` (project root or `src/` folder)
+
+---
+
+### npm install fails silently
+
+If packages are not installed after the command completes:
+
+1. Verify your internet connection
+2. Confirm Node.js and npm are installed: `node -v` and `npm -v` in a terminal
+3. Run the install manually:
    ```bash
    npm install tailwindcss @tailwindcss/vite
    ```
 
-## Troubleshooting
+---
 
-### Issue: "No workspace folder found"
+## 📝 Release Notes
 
-- Ensure you have a folder or workspace open in VS Code
-- Try opening your project folder with `File > Open Folder`
+### v0.3.0 — 2026-06-07
 
-### Issue: File not found errors
+**Improved UX: Unified progress notification**
 
-- Make sure your project has the standard Vite React structure:
-  - `vite.config.ts` or `vite.config.js`
-  - `src/App.jsx` and `src/App.css`
-  - `index.css` (in root or src folder)
+- Replaced multiple individual notification popups with a single `withProgress` notification
+- Progress notification now auto-dismisses when all setup steps are complete
+- `npm install` now runs in the background via `child_process.exec` instead of opening a visible terminal
+- Added a final "Setup Completed!" confirmation message on success
 
-### Issue: npm install doesn't complete
+### v0.2.0
 
-- Check your internet connection
-- Ensure Node.js and npm are properly installed
-- Try running `npm install` manually in the terminal
+**Stability & quality improvements**
 
-## Release Notes
+- Enhanced error handling with per-step try/catch blocks to prevent one failure from stopping the rest of the setup
+- Improved user-facing warning messages with clearer descriptions
+- Better validation of project structure before attempting file writes
+- Refined progress notification messaging for each step
+- General code cleanup and internal refactoring
 
-### 0.2.0
+### v0.1.0
 
-- Enhanced error handling and user feedback
-- Improved documentation and code comments
-- Better validation of project structure
-- Refined terminal output messaging
-- Code cleanup and optimization
+**Execution order fix**
 
-### 0.1.0
+- Reordered setup steps so all config file updates occur before `npm install` is triggered
+- Improved overall execution flow for a more predictable and reliable setup experience
+- Updated progress notification wording for clarity
 
-- Reordered setup steps: config files updated first, then npm install runs last
-- Improved execution flow for better user experience
-- Updated progress notifications
+### v0.0.5
 
-### 0.0.5
+**Initial release**
 
-- Initial release with automated Tailwind CSS setup
-- Command palette integration
-- Progress notifications
+- Automated Tailwind CSS v4 setup for Vite React projects
+- Command Palette integration via `Setup Tailwind CSS` command
+- Step-by-step progress notifications during setup
 
-## Extension Guidelines
+---
 
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
+## 📚 Resources
 
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
+- [Tailwind CSS v4 Documentation](https://tailwindcss.com/docs)
+- [VS Code Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
+- [Vite Documentation](https://vitejs.dev)
 
-## For More Information
+---
 
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+*Made with ❤️ for developers who'd rather be building than configuring.*

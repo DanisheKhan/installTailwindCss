@@ -3,6 +3,7 @@
 import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
+import { exec } from 'child_process';
 
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
@@ -21,50 +22,61 @@ export function activate(context: vscode.ExtensionContext) {
 
 			const workspacePath = workspaceFolder.uri.fsPath;
 
-			// Step 1: Update vite.config
-			try {
-				updateViteConfig(workspacePath);
-				vscode.window.showInformationMessage('✓ Updated vite.config.ts/js');
-			} catch (error) {
-				const errorMsg = error instanceof Error ? error.message : String(error);
-				vscode.window.showWarningMessage(`Could not update vite.config: ${errorMsg}`);
-			}
-			
-			// Step 2: Update index.css
-			try {
-				updateIndexCss(workspacePath);
-				vscode.window.showInformationMessage('✓ Updated index.css');
-			} catch (error) {
-				const errorMsg = error instanceof Error ? error.message : String(error);
-				vscode.window.showWarningMessage(`Could not update index.css: ${errorMsg}`);
-			}
+			await vscode.window.withProgress({
+				location: vscode.ProgressLocation.Notification,
+				title: "Setting up Tailwind CSS",
+				cancellable: false
+			}, async (progress) => {
+				// Step 1: Update vite.config
+				progress.report({ increment: 20, message: "Updating vite.config..." });
+				try {
+					updateViteConfig(workspacePath);
+				} catch (error) {
+					const errorMsg = error instanceof Error ? error.message : String(error);
+					vscode.window.showWarningMessage(`Could not update vite.config: ${errorMsg}`);
+				}
+				
+				// Step 2: Update index.css
+				progress.report({ increment: 20, message: "Updating index.css..." });
+				try {
+					updateIndexCss(workspacePath);
+				} catch (error) {
+					const errorMsg = error instanceof Error ? error.message : String(error);
+					vscode.window.showWarningMessage(`Could not update index.css: ${errorMsg}`);
+				}
 
-			// Step 3: Update App.css
-			try {
-				updateAppCss(workspacePath);
-				vscode.window.showInformationMessage('✓ Cleared App.css');
-			} catch (error) {
-				const errorMsg = error instanceof Error ? error.message : String(error);
-				vscode.window.showWarningMessage(`Could not clear App.css: ${errorMsg}`);
-			}
+				// Step 3: Update App.css
+				progress.report({ increment: 20, message: "Clearing App.css..." });
+				try {
+					updateAppCss(workspacePath);
+				} catch (error) {
+					const errorMsg = error instanceof Error ? error.message : String(error);
+					vscode.window.showWarningMessage(`Could not clear App.css: ${errorMsg}`);
+				}
 
-			// Step 4: Update App.jsx
-			try {
-				updateAppJsx(workspacePath);
-				vscode.window.showInformationMessage('✓ Updated App.jsx');
-			} catch (error) {
-				const errorMsg = error instanceof Error ? error.message : String(error);
-				vscode.window.showWarningMessage(`Could not update App.jsx: ${errorMsg}`);
-			}
+				// Step 4: Update App.jsx
+				progress.report({ increment: 20, message: "Updating App.jsx..." });
+				try {
+					updateAppJsx(workspacePath);
+				} catch (error) {
+					const errorMsg = error instanceof Error ? error.message : String(error);
+					vscode.window.showWarningMessage(`Could not update App.jsx: ${errorMsg}`);
+				}
 
-			// Step 5: Create terminal and run npm install (LAST STEP)
-			const terminal = vscode.window.createTerminal('Tailwind CSS Setup');
-			terminal.show();
-			
-			const npmCmd = 'npm install tailwindcss @tailwindcss/vite';
-			terminal.sendText(npmCmd);
-			
-			vscode.window.showInformationMessage('Installing Tailwind CSS packages... Please wait for npm to complete.');
+				// Step 5: Install packages
+				progress.report({ increment: 20, message: "Installing Tailwind CSS packages..." });
+				await new Promise<void>((resolve, reject) => {
+					exec('npm install tailwindcss @tailwindcss/vite', { cwd: workspacePath }, (error) => {
+						if (error) {
+							console.error('npm install error:', error);
+							vscode.window.showWarningMessage('Failed to install packages. You may need to run "npm install tailwindcss @tailwindcss/vite" manually.');
+						}
+						resolve();
+					});
+				});
+			});
+
+			vscode.window.showInformationMessage('Tailwind CSS Setup Completed!');
 			
 		} catch (error) {
 			const errorMsg = error instanceof Error ? error.message : String(error);
@@ -144,6 +156,8 @@ function App() {
   return (
     <>
       <h1>Danish Khan</h1>
+      <p>I am a freelancer. Connect with me if you want to develop a project!</p>
+      <p>Email: danishkhan.jsx@gmail.com</p>
     </>
   )
 }
